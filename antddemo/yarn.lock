@@ -10924,3 +10924,8 @@ yargs@^11.0.0:
     which-module "^2.0.0"
     y18n "^3.2.1"
     yargs-parser "^9.0.2"
+
+yarn.lock@^0.0.1-security:
+  version "0.0.1-security"
+  resolved "http://registry.npm.taobao.org/yarn.lock/download/yarn.lock-0.0.1-security.tgz#8e7117924bfe916671b21f14212ba1bb49dfe0c7"
+  integrity sha1-jnEXkkv+kWZxsh8UISuhu0nf4Mc=
