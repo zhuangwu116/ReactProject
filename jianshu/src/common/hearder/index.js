@@ -1,10 +1,50 @@
 import React from 'react';
-import {HeaderWrapper, Button,Logo, Nav, NavItem, NavSearch, Addition, SearchWrapper} from './style';
-import { CSSTransition } from 'react-transition-group';
-import { connect } from 'react-redux';
+import {
+    HeaderWrapper,
+    SearchInfoTitle,
+    SearchInfoList,
+    SearchInfoItem,
+    SearchInfoSwitch,
+    Button,
+    Logo,
+    Nav,
+    NavItem,
+    NavSearch,
+    Addition,
+    SearchWrapper,
+    SearchInfo
+} from './style';
+import {CSSTransition} from 'react-transition-group';
+import {connect} from 'react-redux';
+import {actionCreators} from './store';
 
 
-const Header = (props) =>{
+const getListArea = (show) => {
+    if (show) {
+        return (
+            <SearchInfo>
+                <SearchInfoTitle>
+                    热门搜索
+                    <SearchInfoSwitch>
+                        换一批
+                    </SearchInfoSwitch>
+                </SearchInfoTitle>
+                <SearchInfoList>
+                    <SearchInfoItem>教育</SearchInfoItem>
+                    <SearchInfoItem>教育</SearchInfoItem>
+                    <SearchInfoItem>教育</SearchInfoItem>
+                    <SearchInfoItem>教育</SearchInfoItem>
+                    <SearchInfoItem>教育</SearchInfoItem>
+                    <SearchInfoItem>教育</SearchInfoItem>
+                    <SearchInfoItem>教育</SearchInfoItem>
+                </SearchInfoList>
+            </SearchInfo>)
+    } else {
+        return null;
+    }
+}
+
+const Header = (props) => {
     return (
         <HeaderWrapper>
             <Logo href='/'/>
@@ -17,19 +57,21 @@ const Header = (props) =>{
                 </NavItem>
                 <SearchWrapper>
                     <CSSTransition
-                        in = {props.focused}
+                        in={props.focused}
                         timeout={200}
                         classNames="slide"
                     >
                         <NavSearch
-                            className={props.focused ? 'focused': ''}
-                            onFocus={ props.handleInputFocus }
-                            onBlur={ props.handleInputBlur }
+                            className={props.focused ? 'focused' : ''}
+                            onFocus={props.handleInputFocus}
+                            onBlur={props.handleInputBlur}
                         >
                         </NavSearch>
                     </CSSTransition>
-                    <span className={props.focused ? 'focused iconfont': 'iconfont'}
-                    >&#xe62d;</span>
+                    <span className={props.focused ? 'focused iconfont' : 'iconfont'}
+                    >&#xe62d;
+                    </span>
+                    {getListArea(props.focused)}
                 </SearchWrapper>
             </Nav>
             <Addition>
@@ -42,25 +84,20 @@ const Header = (props) =>{
         </HeaderWrapper>
     );
 }
-const mapStateToProps = (state) =>{
-        return {
-            focused: state.focused
-        }
+const mapStateToProps = (state) => {
+    return {
+        //state.get('header').get('focused')
+        focused: state.getIn(['header', 'focused'])
+    }
 }
-const mapDispathToProps = (dispatch) =>{
-        return {
-            handleInputFocus(){
-                const action = {
-                    type: 'search_focus'
-                };
-                dispatch(action);
-            },
-            handleInputBlur(){
-                const action = {
-                    type: 'search_blur'
-                };
-                dispatch(action);
-            }
+const mapDispathToProps = (dispatch) => {
+    return {
+        handleInputFocus() {
+            dispatch(actionCreators.searchFocus());
+        },
+        handleInputBlur() {
+            dispatch(actionCreators.searchBlur());
         }
+    }
 }
-export default connect(mapStateToProps,mapDispathToProps)(Header);
+export default connect(mapStateToProps, mapDispathToProps)(Header);

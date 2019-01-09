@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Header from './common/hearder/index';
+import Header from './common/hearder';
 import { Provider } from 'react-redux';
 
-import store from './store/index';
+import store from './store';
 
 class App extends Component {
   render() {
