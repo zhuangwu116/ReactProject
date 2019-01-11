@@ -1,16 +1,27 @@
 import React, { Component } from 'react';
-import { TopicWrapper,TopicItem } from '../style';
+import { RecommendWrapper, RecommendItem} from '../style'
+import {connect} from 'react-redux';
 
 class Recommend extends Component {
     render() {
+        const { list } = this.props;
         return (
-            <TopicWrapper>
-                <TopicItem>
-                    <img src="//upload-images.jianshu.io/upload_images/12095765-51de294df7c1f09d.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/360/h/240"/>
-                    社会热点
-                </TopicItem>
-            </TopicWrapper>
+            <RecommendWrapper>
+                {
+                    list.map((item)=>{
+                        return (
+                            <RecommendItem key={item.get('id')} imgUrl={item.get('imgUrl')}/>
+                        )
+                    })
+                }
+            </RecommendWrapper>
         );
     }
 }
-export default Recommend;
+
+const mapStateToProps = (state) => {
+    return {
+        list: state.getIn(['home', 'recommendList']),
+    }
+}
+export default connect(mapStateToProps, null)(Recommend);
