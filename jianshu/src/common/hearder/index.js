@@ -1,4 +1,5 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
+import { Link } from 'react-router-dom';
 import {
     HeaderWrapper,
     SearchInfoTitle,
@@ -19,12 +20,14 @@ import {connect} from 'react-redux';
 import {actionCreators} from './store';
 
 
-class Header extends Component {
+class Header extends PureComponent {
     render() {
         const { focused, list,handleInputFocus, handleInputBlur} = this.props;
         return (
             <HeaderWrapper>
-                <Logo href='/'/>
+                <Link to='/'>
+                <Logo/>
+                </Link>
                 <Nav>
                     <NavItem className='left'>首页</NavItem>
                     <NavItem className='left'>下载App</NavItem>

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { PureComponent} from 'react';
 import {HomeWrapper, HomeLeft, HomeRight, BackTop} from './style'
 import Topic from './components/Topic';
 import List from './components/List';
@@ -8,7 +8,7 @@ import {actionCreators} from './store';
 
 import {connect} from 'react-redux';
 
-class Home extends Component {
+class Home extends PureComponent {
     render() {
         return (
             <HomeWrapper>
@@ -30,6 +30,7 @@ class Home extends Component {
         );
     }
 
+
     componentDidMount() {
         this.props.changeHomeData();
         this.bindEvents();
@@ -44,6 +45,7 @@ class Home extends Component {
     handleScrollTop() {
         window.scrollTo(0, 0);
     }
+    
 }
 const mapState = (state) => ({
     showScroll: state.getIn(['home','showScroll'])
