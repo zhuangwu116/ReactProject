@@ -4,6 +4,7 @@ import './style/common.css';
 import Header from './components/header';
 import Footer from './components/footer';
 import NavLeft from './components/navleft';
+import Home from './pages/home';
 class Admin extends Component{
     render(){
         return(
@@ -14,7 +15,7 @@ class Admin extends Component{
             <Col span={20} className="main">
             <Header />
             <Row className="content">
-                content
+                <Home />
             </Row>
             <Footer />
             </Col>

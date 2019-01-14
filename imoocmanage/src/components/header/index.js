@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Row, Col} from 'antd';
 import './index.css';
 import Util from '../../utils/utils';
-
+import axios from '../../axios';
 class Header extends Component {
     componentWillMount() {
         this.setState({
@@ -14,8 +14,35 @@ class Header extends Component {
                 sysTime
             })
         }, 1000)
+        //this.getWeatherAPIData();
     }
+    getWeatherAPIData(){
+        let city='北京'
+        axios.jsonp({
+            url: 'http://v.juhe.cn/weather/index?format=2&cityname='+encodeURIComponent(city)+'&key=246442fb32a81cb7310c3c0857aa2da8'
+        }).then((res)=>{
+           let data = res.today;
+           let date = new Date();
+           let hours = date.getHours();
+           let dayurlfa = ''
+            let dayrulfb = ''
+           if( 8<hours<20 ){
+               dayurlfa = '/assets/weather/d'+data.weather_id.fa+'.gif';
+               dayrulfb = '/assets/weather/d'+data.weather_id.fb+'.gif';
+           }else{
+               dayurlfa = '/assets/weather/n'+data.weather_id.fa+'.gif';
+               dayrulfb = '/assets/weather/n'+data.weather_id.fb+'.gif';
+           }
+           this.setState({
+               dayPictureUrlfa:dayurlfa,
+               dayPictureUrlfb:dayrulfb,
+               weather:data.weather,
 
+           })
+        }).catch(function (reason) {
+            console.log(reason)
+        })
+    }
     render() {
         return (
             <div className='header'>
@@ -31,7 +58,10 @@ class Header extends Component {
                     </Col>
                     <Col span={20} className="weather">
                         <span className="date">{ this.state.sysTime }</span>
-                        <span className="weather-detail">请转多云</span>
+                        <span className="weather-img">
+                            <img src={this.state.dayPictureUrlfa} alt='' />
+                        </span>
+                        <span className="weather-detail"> {this.state.weather}</span>
                     </Col>
                 </Row>
             </div>
