@@ -26,7 +26,7 @@ class NavLeft extends Component {
                 return (<SubMenu title={item.title} key={item.key}>{this.renderMenu(item.children)}</SubMenu>)
             }
             return <Menu.Item title={item.title} key={item.key}>
-                <NavLink to={ item.key }>{ item.title }</NavLink>
+                <NavLink to={'/admin'+item.key}>{ item.title }</NavLink>
             </Menu.Item>
         })
     }

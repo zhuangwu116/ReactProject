@@ -1,9 +1,9 @@
-import React, {Component,Fragment} from 'react';
+import React, {Component} from 'react';
 import {HashRouter, Route, Switch} from "react-router-dom";
 import App from './App';
 import Login from './pages/login';
 import Admin from './Admin';
-import Button from './pages/buttons';
+import Buttons from './pages/buttons';
 import NoMatch from './pages/nomatch';
 
 class IRouter extends Component {
@@ -14,8 +14,10 @@ class IRouter extends Component {
                     <Route path='/login' component={Login}/>
                     <Route path='/admin' render={()=>
                         <Admin>
-                            <Route path='/admin/ui/buttons' component={ Button }/>
-                            <Route  component={ NoMatch }/>
+                            <Switch>
+                                <Route path='/admin/ui/buttons' component={ Buttons }/>
+                                <Route  component={ NoMatch }/>
+                            </Switch>
                         </Admin>
                     }/>
                     <Route path='/order/detail' component={Login}/>

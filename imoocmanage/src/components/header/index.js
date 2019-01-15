@@ -16,6 +16,10 @@ class Header extends Component {
         }, 1000)
         //this.getWeatherAPIData();
     }
+    componentWillUnmount() {
+        clearInterval()
+    }
+
     getWeatherAPIData(){
         let city='北京'
         axios.jsonp({
