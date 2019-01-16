@@ -5,7 +5,8 @@ import Login from './pages/login';
 import Admin from './Admin';
 import Buttons from './pages/buttons';
 import NoMatch from './pages/nomatch';
-import Modals from './pages/modals'
+import Modals from './pages/modals';
+import Gallerys from './pages/ui/gallery'
 class IRouter extends Component {
     render() {
         return (
@@ -17,6 +18,7 @@ class IRouter extends Component {
                             <Switch>
                                 <Route path='/admin/ui/buttons' component={ Buttons }/>
                                 <Route path='/admin/ui/modals' component={ Modals }/>
+                                <Route path='/admin/ui/gallery' component={ Gallerys }/>
                                 <Route  component={ NoMatch }/>
 
                             </Switch>
