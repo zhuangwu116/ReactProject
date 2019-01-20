@@ -1,10 +1,11 @@
-import React, {Component} from 'react';
+import React from 'react'
+export default class NoMatch extends React.Component {
 
-class NoMatch extends Component{
-    render(){
-        return(
-            <div style={{textAlign: 'center', fontSize: '14px'}}>404 No Found!!!</div>
+    render() {
+        return (
+            <div style={{textAlign:'center',fontSize:'24'}}>
+                404 No Found!!!
+            </div>
         );
     }
 }
-export default NoMatch;
