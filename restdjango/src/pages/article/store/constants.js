@@ -1,0 +1,1 @@
+export const PAGES_ARTICLE_LIST_DATA = 'article/ARTICLE_LIST';
