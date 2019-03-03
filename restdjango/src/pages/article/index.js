@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
-import {Container, Segment} from "semantic-ui-react";
-import {Grid} from "semantic-ui-react/dist/commonjs/collections/Grid";
+import {Container, Segment, Grid} from "semantic-ui-react";
 import {Carousel} from "antd";
 import ArticleItem from "../../components/articlelist";
 import {connect} from 'react-redux';
-
+import { actionCreators } from './store';
 
 class ArticlePage extends Component{
+    componentDidMount() {
+        this.props.getArticleList();
+    }
+
     render() {
         return (
             <Segment vertical style={{marginTop: '5em', borderBottom: 'none'}}>
@@ -31,7 +34,18 @@ class ArticlePage extends Component{
             </Segment>
         );
     }
-}
+};
 
-export default connect(null,null)(ArticlePage);
+const mapState = (state) => {
+    console.log(state.getIn(['article', 'articleList']));
+    return { list: state.getIn(['article', 'articleList']) }
+};
+
+const mapDispatch = (dispatch) => ({
+    getArticleList(){
+        dispatch(actionCreators.PAGES_ARTICLE_LIST_DATA_ASYC())
+    }
+});
+
+export default connect(mapState,mapDispatch)(ArticlePage);
 
