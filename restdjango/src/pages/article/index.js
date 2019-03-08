@@ -1,16 +1,23 @@
 import React, { Component } from 'react';
-import {Container, Segment, Grid} from "semantic-ui-react";
+import {Container, Segment, Grid, Pagination, Icon } from "semantic-ui-react";
 import {Carousel} from "antd";
-import ArticleItem from "../../components/articlelist";
 import {connect} from 'react-redux';
-import { actionCreators } from './store';
+import ArticleItem from "../../components/articlelist";
+import { articlelistActions } from '../../core/articlelists';
+import {categorysActions} from '../../core/articlelists/categorys';
 
 class ArticlePage extends Component{
-    componentDidMount() {
-        this.props.getArticleList();
+    componentWillMount() {
+        this.props.loadArticles();
+        this.props.willMountDropdown();
+    }
+    componentWillUnmount() {
+        this.props.willUnMountDropdown();
     }
 
     render() {
+       const {list, totalpage, updateArticlesPagination} = this.props;
+
         return (
             <Segment vertical style={{marginTop: '5em', borderBottom: 'none'}}>
                 <Container>
@@ -23,7 +30,22 @@ class ArticlePage extends Component{
                                     <div><h3>3</h3></div>
                                     <div><h3>4</h3></div>
                                 </Carousel>
-                                <ArticleItem/>
+                                {
+                                    list.map((item,index)=>{
+                                       return (<ArticleItem key={item.get('id')} props={item}/>)
+                                    })
+                                }
+                                <Pagination
+                                    style = {{float: 'right'}}
+                                    defaultActivePage={1}
+                                    onPageChange={updateArticlesPagination}
+                                    ellipsisItem={{ content: <Icon name='ellipsis horizontal' />, icon: true }}
+                                    firstItem={{ content: <Icon name='angle double left' />, icon: true }}
+                                    lastItem={{ content: <Icon name='angle double right' />, icon: true }}
+                                    prevItem={{ content: <Icon name='angle left' />, icon: true }}
+                                    nextItem={{ content: <Icon name='angle right' />, icon: true }}
+                                    totalPages={totalpage}
+                                />
                             </Grid.Column>
                             <Grid.Column width={6}>
                                 bbbbbbbbbbbbbbbbbbbbbbbbbbb
@@ -36,16 +58,15 @@ class ArticlePage extends Component{
     }
 };
 
-const mapState = (state) => {
-    console.log(state.getIn(['article', 'articleList']));
-    return { list: state.getIn(['article', 'articleList']) }
-};
-
-const mapDispatch = (dispatch) => ({
-    getArticleList(){
-        dispatch(actionCreators.PAGES_ARTICLE_LIST_DATA_ASYC())
-    }
+const mapState = (state) => ({
+        list: state.getIn(['article', 'articleList']),
+        totalpage: state.getIn(['article', 'totalpage']),
 });
-
-export default connect(mapState,mapDispatch)(ArticlePage);
+const mapDispathchToProps = {
+    loadArticles: articlelistActions.loadArticles,
+    updateArticlesPagination: articlelistActions.updateArticlesPagination,
+    willMountDropdown: categorysActions.willMountDropdown,
+    willUnMountDropdown: categorysActions.willUnMountDropdown,
+}
+export default connect(mapState, mapDispathchToProps)(ArticlePage);
 

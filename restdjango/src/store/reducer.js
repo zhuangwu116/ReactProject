@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux-immutable';
-import { reducer as articleReducer } from '../pages/article/store';
-
+import { articleReducer } from '../core/articlelists';
 const reducer =  combineReducers({
     article: articleReducer,
 });

@@ -8,7 +8,6 @@ import {
     List,
     Segment,
 } from 'semantic-ui-react';
-import { connect } from 'react-redux'
 import logo from "../../logo.svg";
 
 class Footer extends Component{

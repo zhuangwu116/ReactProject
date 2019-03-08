@@ -3,7 +3,7 @@ import axios from 'axios';
 
 let host = 'http://127.0.0.1:8000';
 
-//获取商品类别信息
+//获取类别信息
 export const queryCategorygoods = params => { return axios.get(`${host}/articles/`) }
 
 //获取首页中的新品
@@ -12,15 +12,8 @@ export const newGoods = params => { return axios.get(`${host}/newgoods/`) }
 //获取轮播图
 export const bannerGoods = params => { return axios.get(`${host}/banners/`) }
 
-//获取商品类别信息
-export const getCategory = params => {
-    if('id' in params){
-        return axios.get(`${host}/categorys/`+params.id+'/');
-    }
-    else {
-        return axios.get(`${host}/categorys/`, params);
-    }
-};
+//获取文章类别信息
+export const getCategorys = () => { return axios.get(`${host}/categorys/`) }
 
 
 //获取热门搜索关键词

@@ -1,30 +1,31 @@
 import React from 'react';
 import { Card, Icon } from 'semantic-ui-react';
+import dataformat from '../../utils';
 
-const ArticleItem = () =>(
+const ArticleItem = (props) =>(
     <Card fluid>
         <Card.Content>
-            <Card.Header>asdafdsfadsfdsf</Card.Header>
+            <Card.Header>{props.props.get('title')}</Card.Header>
             <Card.Description>
-                sjd;lasjdklaf;jdskljfaksdljkavlnkdsdjafd
+                {props.props.get('desc')}
             </Card.Description>
         </Card.Content>
         <Card.Content>
             <Icon.Group size="large">
                 <Icon name="user"/>
-                小明
+                {props.props.getIn(['user', 'username'])}
             </Icon.Group>
             <Icon.Group style={{marginLeft:'0.5em'}} size="large">
                 <Icon name="clock"/>
-                2018-19-20
+                { dataformat(props.props.get('date_publish')) }
             </Icon.Group>
             <Icon.Group style={{marginLeft:'0.5em', float:'right'}} size="large">
                 <Icon name="eye"/>
-                18
+                {props.props.get("click_count")}
             </Icon.Group>
             <Icon.Group style={{float:'right'}} size="large">
                 <Icon name="comment"/>
-                20
+                {props.props.get("comment_count")}
             </Icon.Group>
         </Card.Content>
     </Card>
