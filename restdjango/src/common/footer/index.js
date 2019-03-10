@@ -9,6 +9,7 @@ import {
     Segment,
 } from 'semantic-ui-react';
 import logo from "../../logo.svg";
+import LoginForm from '../../components/loginlayout';
 
 class Footer extends Component{
     render() {
@@ -67,6 +68,7 @@ class Footer extends Component{
                     </List.Item>
                 </List>
             </Container>
+            <LoginForm/>
         </Segment>);
     }
 }

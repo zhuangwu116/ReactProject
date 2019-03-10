@@ -22,9 +22,9 @@ export function articleReducer(state= new Articlelist(), {artdata, type}) {
                 next: null,
                 articleList: []
             })
-        case articlelistActions.UPDATE_ARTICLES_PAGINATION:
+        case articlelistActions.UPDATE_ARTICLES_PAGINATION_VALUE:
 
-            return state.set('page', artdata.page)
+            return state.set('page', artdata)
 
         case categorysActions.CHANGE_DROPDOWN_VAULE:
             console.log(artdata)

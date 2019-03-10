@@ -5,6 +5,7 @@ export const articlelistActions = {
 
     LOAD_ARTICLES_RESULTS: 'LOAD_ARTICLES_RESULTS',
     UPDATE_ARTICLES_PAGINATION: 'UPDATE_ARTICLES_PAGINATION',
+    UPDATE_ARTICLES_PAGINATION_VALUE: 'UPDATE_ARTICLES_PAGINATION_VALUE',
 
     fetchArticlesFailed: error => ({
         type: articlelistActions.FETCH_ARTICLES_FAILED,
@@ -23,6 +24,10 @@ export const articlelistActions = {
             page: activePage
         }
 
+    }),
+    updateArticlesPaginationValue:(page) =>({
+        type: articlelistActions.UPDATE_ARTICLES_PAGINATION_VALUE,
+        artdata: page
     })
 };
 

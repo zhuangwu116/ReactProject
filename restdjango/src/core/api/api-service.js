@@ -23,7 +23,7 @@ export const getHotSearch = params => { return axios.get(`${host}/hotsearchs/`) 
 export const getArticles = params => { return axios.get(`${host}/articles/`, { params: params }) }
 
 //商品详情
-export const getGoodsDetail = goodId => { return axios.get(`${host}/goods/${goodId}`+'/') }
+export const getGoodsDetail = goodId => { return axios.get(`${host}/goods/${goodId}/`) }
 
 //获取购物车商品
 export const getShopCarts = params => { return axios.get(`${host}/shopcarts/`) }
@@ -59,7 +59,7 @@ export const getMessage = parmas => { return axios.post(`${host}/code/`, parmas)
 
 
 //获取用户信息
-export const getUserDetail = () => { return axios.get(`${host}/users/1/`) }
+export const getUserDetail = (token) => { return axios.get(`${host}/user/1/`, {headers:{'Authorization': 'JWT '+token}}) }
 
 //修改用户信息
 export const updateUserInfo = params => { return axios.patch(`${host}/users/1/`, params) }

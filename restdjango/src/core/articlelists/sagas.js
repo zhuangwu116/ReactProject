@@ -7,7 +7,6 @@ import { searchActions, searchRequestActions} from "./search";
 import { getArticlesState } from './selectors';
 import history from '../history';
 
-
 export function* loadArticles() {
     try{
         const articlestate = yield select(getArticlesState);
@@ -26,6 +25,7 @@ export function* loadArticles() {
         }
 
         const res = yield call(api.getArticles, params);
+        console.log(res);
         yield put(articlelistRequestActions.fulfilled(res.data))
         const urlconifg = {
             pathname: `/articles`,
@@ -48,28 +48,8 @@ export function* loadcategorys() {
 }
 export function* update_pagination({artdata}) {
     try {
-        const articlestate = yield select(getArticlesState);
-        let params = {
-            page:artdata.page,
-            page_size: articlestate.getIn(['article','page_size'])
-        }
-        if (articlestate.getIn(['article','ordering_click'])){
-            params.ordering = '-click_count'
-        }else{
-            params.ordering = '-date_publish'
-        }
-        let url =  `?page=${params.page}&page_size=${params.page_size}&ordering=${params.ordering}`;
-        if (articlestate.getIn(['article', 'categoryvalue']) !== -1){
-            params.top_category = articlestate.getIn(['article', 'categoryvalue'])
-            url += `&top_category=${params.top_category}`
-        }
-        const res = yield call(api.getArticles, params);
-        yield put(articlelistRequestActions.fulfilled(res.data))
-        const urlconifg = {
-            pathname: `/articles`,
-            search: url
-        }
-        yield history.push(urlconifg)
+        yield put(articlelistActions.updateArticlesPaginationValue(artdata.page));
+        yield put(articlelistActions.loadArticles());
     }catch (error) {
         yield put(articlelistRequestActions.failed(error));
     }
