@@ -59,7 +59,7 @@ export const getMessage = parmas => { return axios.post(`${host}/code/`, parmas)
 
 
 //获取用户信息
-export const getUserDetail = (token) => { return axios.get(`${host}/user/1/`, {headers:{'Authorization': 'JWT '+token}}) }
+export const getUserDetail = token => { return axios.get(`${host}/user/1/`, {headers:{'Authorization': 'JWT '+token}}) }
 
 //修改用户信息
 export const updateUserInfo = params => { return axios.patch(`${host}/users/1/`, params) }

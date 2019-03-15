@@ -51,7 +51,8 @@ const mapStateToProps = (state) => {
         return {
             isLoading: state.getIn(['article', 'issearchLoading']),
             value: state.getIn(['article', 'searchValue']),
-            results: [...tem_results]
+            results: [...tem_results],
+
         }
 }
 const mapDispatchToProps = {

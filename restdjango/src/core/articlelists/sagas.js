@@ -25,7 +25,6 @@ export function* loadArticles() {
         }
 
         const res = yield call(api.getArticles, params);
-        console.log(res);
         yield put(articlelistRequestActions.fulfilled(res.data))
         const urlconifg = {
             pathname: `/articles`,
