@@ -3,12 +3,14 @@ import {Container, Segment, Grid, Pagination, Icon } from "semantic-ui-react";
 import {Carousel} from "antd";
 import {connect} from 'react-redux';
 import ArticleItem from "../../components/articlelist";
+import ArticleTab from '../../components/articletab';
 import { articlelistActions } from '../../core/articlelists';
 import {categorysActions} from '../../core/articlelists/categorys';
 
 class ArticlePage extends Component{
     componentWillMount() {
         this.props.loadArticles();
+        this.props.loadCommentArticles();
         this.props.willMountDropdown();
     }
     componentWillUnmount() {
@@ -16,7 +18,7 @@ class ArticlePage extends Component{
     }
 
     render() {
-       const {list, totalpage, updateArticlesPagination} = this.props;
+       const {list, totalpage,commentArticles,updateArticlesPagination} = this.props;
 
         return (
             <Segment vertical style={{marginTop: '5em', borderBottom: 'none'}}>
@@ -31,6 +33,7 @@ class ArticlePage extends Component{
                                     <div><h3>4</h3></div>
                                 </Carousel>
                                 {
+
                                     list.map((item,index)=>{
                                        return (<ArticleItem key={item.get('id')} props={item}/>)
                                     })
@@ -48,7 +51,7 @@ class ArticlePage extends Component{
                                 />
                             </Grid.Column>
                             <Grid.Column width={6}>
-                                bbbbbbbbbbbbbbbbbbbbbbbbbbb
+                                <ArticleTab props={commentArticles} />
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>
@@ -61,9 +64,11 @@ class ArticlePage extends Component{
 const mapState = (state) => ({
         list: state.getIn(['article', 'articleList']),
         totalpage: state.getIn(['article', 'totalpage']),
+        commentArticles: state.getIn(['article', 'articleCommentList'])
 });
 const mapDispathchToProps = {
     loadArticles: articlelistActions.loadArticles,
+    loadCommentArticles: articlelistActions.loadCommentArticles,
     updateArticlesPagination: articlelistActions.updateArticlesPagination,
     willMountDropdown: categorysActions.willMountDropdown,
     willUnMountDropdown: categorysActions.willUnMountDropdown,
