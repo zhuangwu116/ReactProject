@@ -22,20 +22,23 @@ export function articleReducer(state= new Articlelist(), {artdata, type}) {
                 next: null,
                 articleList: []
             })
+        case articlelistActions.FETCH_COMMENT_ARTICLES_FULFILLED:
+            return state.set('articleCommentList', fromJS(artdata))
+
+        case articlelistActions.FETCH_COMMENT_ARTICLES_FAILED:
+            return state.set('articleCommentList', [])
+
         case articlelistActions.UPDATE_ARTICLES_PAGINATION_VALUE:
 
             return state.set('page', artdata)
 
         case categorysActions.CHANGE_DROPDOWN_VAULE:
-            console.log(artdata)
             return state.merge({
                 categoryvalue: artdata,
                 page: 1
             })
         case categorysActions.FETCH_CATEGORYS_FULFILLED:
-            return state.merge({
-                categoryList: fromJS(artdata)
-            });
+            return state.set('categoryList',fromJS(artdata));
 
         case categorysActions.FETCH_CATEGORYS_FAILED:
             return state

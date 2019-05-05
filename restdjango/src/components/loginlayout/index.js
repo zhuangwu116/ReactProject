@@ -2,11 +2,18 @@ import React, {Component} from 'react'
 import {Button, Modal, Form, Grid, Header, Image, Message, Segment} from 'semantic-ui-react';
 import {connect} from 'react-redux';
 import logo from "../../logo.svg";
+import {authActions} from "../../core/auth";
 
 class LoginForm extends Component {
     render() {
+        const {isopen, handleClose, username, password, handlesubmit,
+            handleUserNameChange, handlePasswordChange} = this.props;
         return (
-            <Modal trigger={<Button>Show Modal</Button>} open={false}>
+            <Modal  open={isopen}
+                   onClose={handleClose}
+                    closeOnEscape={true}
+                    closeOnDimmerClick={true}
+            >
                 <div className='login-form'>
                     <style>{`
       body > div,
@@ -22,16 +29,19 @@ class LoginForm extends Component {
                             </Header>
                             <Form size='large'>
                                 <Segment stacked>
-                                    <Form.Input fluid icon='user' iconPosition='left' placeholder='E-mail address'/>
+                                    <Form.Input fluid icon='user' name='username' value={username} onChange={handleUserNameChange} iconPosition='left' placeholder='username or telphone'/>
                                     <Form.Input
                                         fluid
                                         icon='lock'
                                         iconPosition='left'
                                         placeholder='Password'
                                         type='password'
+                                        name='password'
+                                        value={password}
+                                        onChange={handlePasswordChange}
                                     />
 
-                                    <Button color='teal' fluid size='large'>
+                                    <Button onClick={handlesubmit} color='teal' fluid size='large'>
                                         Login
                                     </Button>
                                 </Segment>
@@ -46,5 +56,15 @@ class LoginForm extends Component {
         );
     }
 }
-
-export default connect(null, null)(LoginForm);
+const mapStateToProps = (state) => ({
+    isopen: state.getIn(['auth', 'isopenmodal']),
+    username: state.getIn(['auth',' username']),
+    password: state.getIn(['auth',' password'])
+});
+const mapDispathchToProps = {
+    handleClose: authActions.handleclosemodal,
+    handleUserNameChange: authActions.handleUserNameChange,
+    handlePasswordChange: authActions.handlePasswordChange,
+    handlesubmit: authActions.handleloginSubmit
+}
+export default connect(mapStateToProps, mapDispathchToProps)(LoginForm);

@@ -20,7 +20,10 @@ export const getCategorys = () => { return axios.get(`${host}/categorys/`) }
 export const getHotSearch = params => { return axios.get(`${host}/hotsearchs/`) }
 
 //获取文章列表
-export const getArticles = params => { return axios.get(`${host}/articles/`, { params: params }) }
+export const getArticles = params => { return axios.get(`${host}/articles/`, { params: params })}
+
+//获取文章评论排行榜
+export const getCommentArticles = params => { return axios.get(`${host}/commentarticles/`, { params: params })}
 
 //商品详情
 export const getGoodsDetail = goodId => { return axios.get(`${host}/goods/${goodId}/`) }
@@ -59,7 +62,7 @@ export const getMessage = parmas => { return axios.post(`${host}/code/`, parmas)
 
 
 //获取用户信息
-export const getUserDetail = (token) => { return axios.get(`${host}/user/1/`, {headers:{'Authorization': 'JWT '+token}}) }
+export const getUserDetail = token => { return axios.get(`${host}/user/1/`, {headers:{'Authorization': 'JWT '+token}}) }
 
 //修改用户信息
 export const updateUserInfo = params => { return axios.patch(`${host}/users/1/`, params) }

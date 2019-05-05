@@ -1,11 +1,11 @@
 import {call, takeLatest, put, fork, select, take} from 'redux-saga/effects';
 import api from '../api';
 
-import {  articlelistActions, articlelistRequestActions } from './actions';
+import {  articlelistActions, articlelistRequestActions, commentArticlelistRequestActions } from './actions';
 import {categorysActions, categorysRequestActions} from './categorys';
 import { searchActions, searchRequestActions} from "./search";
 import { getArticlesState } from './selectors';
-import history from '../history';
+
 
 export function* loadArticles() {
     try{
@@ -18,21 +18,13 @@ export function* loadArticles() {
         }else{
             params.ordering = '-date_publish'
         }
-        let url =  `?page=${params.page}&page_size=${params.page_size}&ordering=${params.ordering}`;
+
         if (articlestate.getIn(['article', 'categoryvalue']) !== -1){
             params.top_category = articlestate.getIn(['article', 'categoryvalue'])
-            url += `&top_category=${params.top_category}`
         }
 
         const res = yield call(api.getArticles, params);
-        console.log(res);
         yield put(articlelistRequestActions.fulfilled(res.data))
-        const urlconifg = {
-            pathname: `/articles`,
-            search: url
-        }
-        yield history.push(urlconifg)
-
     }catch(error) {
         yield put(articlelistRequestActions.failed(error));
     }
@@ -46,6 +38,16 @@ export function* loadcategorys() {
         yield put(categorysRequestActions.failed(error));
     }
 }
+
+export function* loadCommentArticles() {
+    try{
+        const res = yield call(api.getCommentArticles, {page: 1});
+        yield put(commentArticlelistRequestActions.fulfilled(res.data))
+    }catch(error) {
+        yield put(commentArticlelistRequestActions.failed(error));
+    }
+}
+
 export function* update_pagination({artdata}) {
     try {
         yield put(articlelistActions.updateArticlesPaginationValue(artdata.page));
@@ -55,6 +57,7 @@ export function* update_pagination({artdata}) {
     }
 }
 
+
 export function* change_categorys(artdata) {
     try {
         const articlestate = yield select(getArticlesState);
@@ -62,18 +65,11 @@ export function* change_categorys(artdata) {
             page:1,
             page_size: articlestate.getIn(['article','page_size'])
         }
-        let url =  `?page=${params.page}&page_size=${params.page_size}`;
         if ( artdata !==-1 ){
             params.top_category = artdata
-            url += `&top_category=${params.top_category}`
         }
         const res = yield call(api.getArticles, params);
         yield put(articlelistRequestActions.fulfilled(res.data))
-        const urlconifg = {
-            pathname: `/articles`,
-            search: url
-        }
-        yield history.push(urlconifg)
     }catch (error) {
         yield put(articlelistRequestActions.failed(error));
     }
@@ -93,10 +89,6 @@ export function* handleSearchChange({artdata}){
         }
         const res =yield call(api.getArticles, params);
         yield put(searchRequestActions.fulfilled(res.data))
-        const urlconifg = {
-            search: `?search=${artdata}`
-        }
-        yield history.push(urlconifg)
     }catch (error) {
         console.log(error)
         yield put(searchRequestActions.failed(error));
@@ -104,6 +96,9 @@ export function* handleSearchChange({artdata}){
 }
 export function* watchArticles(){
     yield takeLatest(articlelistActions.LOAD_ARTICLES_RESULTS, loadArticles);
+}
+export function* watchCommentArticles() {
+    yield takeLatest(articlelistActions.LOAD_COMMENT_ARTICLES_RESULTS, loadCommentArticles);
 }
 export function* watchUpdatePagination() {
     yield takeLatest(articlelistActions.UPDATE_ARTICLES_PAGINATION, update_pagination);
@@ -128,6 +123,7 @@ export function* watchhandleSearchChange() {
 
 export const articleSagas = [
     fork(watchArticles),
+    fork(watchCommentArticles),
     fork(watchUpdatePagination),
     fork(watchCategorys),
     fork(watchChangeCategorys),

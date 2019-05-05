@@ -9,6 +9,7 @@ export const Articlelist = new Record({
     categoryvalue: -1,
     categoryList: [],
     articleList: [],
+    articleCommentList:[],
     previous: null,
     next: null,
     page: 1,
