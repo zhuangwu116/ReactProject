@@ -29,7 +29,7 @@ export const authActions = {
     handleoutlogin: ()=>({
         type: authActions.AUTH_OUTLOGIN
     }),
-    
+
 
 };
 
